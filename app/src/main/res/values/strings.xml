@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Exercise</string>
+    <string name="app_name">商城购物</string>
     <string name="goods">合格产品</string>
     <string name="btn">加入购物车</string>
 </resources>
