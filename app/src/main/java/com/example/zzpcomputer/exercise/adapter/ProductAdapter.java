@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import com.example.zzpcomputer.exercise.Bean.Product;
 import com.example.zzpcomputer.exercise.R;
+import com.example.zzpcomputer.exercise.thread.ImageHttpThread;
 
 import java.util.List;
 
+@SuppressWarnings("all")
 public class ProductAdapter extends ArrayAdapter {
 
     private int resourceId;
@@ -53,6 +55,7 @@ public class ProductAdapter extends ArrayAdapter {
             view=LayoutInflater.from(getContext()).inflate(resourceId,parent,false);
             productLayout.titleView=view.findViewById(R.id.title);
             productLayout.priceView=view.findViewById(R.id.price);
+            productLayout.imageView=view.findViewById(R.id.img);
             //将获取的View缓存起来
             view.setTag(productLayout);
         }else{
@@ -62,7 +65,20 @@ public class ProductAdapter extends ArrayAdapter {
         //为Item设置值
          productLayout.titleView.setText(product.getTitle());
          productLayout.priceView.setText(product.getPrice());
-         return view;
+        /**
+         * 在获得每一个Item的时候都建立一个线程获取图片
+         */
+        ImageHttpThread imageHttpThread=new ImageHttpThread(product.getImage());
+        imageHttpThread.start();
+        try {
+            //获取图片的线程优先
+            imageHttpThread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        //设置图片
+        productLayout.imageView.setImageBitmap(imageHttpThread.getResultBitmap());
+        return view;
     }
 
     /**

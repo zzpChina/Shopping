@@ -1,5 +1,10 @@
 package com.example.zzpcomputer.exercise.thread;
 
+import android.util.Log;
+
+import com.example.zzpcomputer.exercise.utils.HttpMethod;
+import com.example.zzpcomputer.exercise.utils.HttpUtil;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,27 +14,32 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * 通过http请求获取服务器传来的对象
+ * 通过http请求获取服务器传来的字符串
  */
+@SuppressWarnings("all")
 public class ProductHttpThread extends Thread{
     //用于保存服务器传输回来的内容
     private String result;
     @Override
     public void run() {
         try {
-            URL url=new URL("http://119.29.60.170:8080/shopping/product");
+            URL url=new URL(HttpUtil.URL+"product");
             //获取连接
             HttpURLConnection httpURLConnection= (HttpURLConnection) url.openConnection();
             //获取流对象
             InputStream is=httpURLConnection.getInputStream();
+            httpURLConnection.setRequestMethod(String.valueOf(HttpMethod.GET));
+            httpURLConnection.setConnectTimeout(HttpUtil.TIME_OUT);
             InputStreamReader inputStreamReader=new InputStreamReader(is,"utf-8");
             BufferedReader bufferedReader=new BufferedReader(inputStreamReader);
-            StringBuffer result=new StringBuffer();
+            StringBuffer stringBuffer=new StringBuffer();
             String temp=null;
             while((temp=bufferedReader.readLine())!=null){
-                result.append(temp);
+                stringBuffer.append(temp);
             }
-            setResult(result.toString());
+            String str=stringBuffer.toString();
+            Log.i("请求结果",str);
+            setResult(stringBuffer.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
