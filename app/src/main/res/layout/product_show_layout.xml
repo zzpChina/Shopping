@@ -21,29 +21,27 @@
             android:layout_height="wrap_content"
             android:id="@+id/title"
             android:ellipsize="end"
-            android:contentDescription="这是一个好项链"
+            android:contentDescription="@string/goods"
             android:maxLines="2"
-            android:text="送老婆送美女送大哥送大嫂送情人送爸爸送妈妈送儿子送女儿送你个" />
+            android:text="" />
 
         <TextView
+            android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:id="@+id/price"
-            android:textSize="20sp"
-            android:gravity="center"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            android:text=""
             android:textColor="#ff7700"
-            android:text="￥2000" />
+            android:textSize="20sp" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="40dp"
             android:textSize="15sp"
             android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/price"
-            android:layout_toEndOf="@+id/price"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_alignParentRight="true"
             android:text="@string/btn"  />
 
     </RelativeLayout>
